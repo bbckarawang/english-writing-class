@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Creative Writing Workshop</title>
+    <title>English Creative Writing Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -15,9 +15,7 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .story-card {
-            animation: slideIn 0.4s ease-out forwards;
-        }
+        .story-card { animation: slideIn 0.4s ease-out forwards; }
         @keyframes slideIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -26,27 +24,28 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between">
 
-    <!-- APPS SCRIPT URL CONFIGURATION -->
+    <!-- CONFIGURATION -->
     <script>
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwekd-f4PSEMk4ee65TbqRs19Oo-XXuuet008XzKxAej03pL5kAq57WQZIk-uv85OY/exec";
+        let activeGame = "LastHuman"; // LastHuman | ChainWriting | AgonyAunt
     </script>
 
     <!-- Header / Navbar -->
     <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50 px-6 py-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
                 <div class="p-2 bg-indigo-600 rounded-lg text-white font-bold text-xl">
                     <i class="fa-solid fa-feather-pointed"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg leading-tight text-white">English Creative Writing Workshop</h1>
+                    <h1 class="font-bold text-lg leading-tight text-white">English Writing Workshop</h1>
                     <p class="text-xs text-indigo-400">Interactive Student Writing Hub</p>
                 </div>
             </div>
 
-            <!-- Navigation Controls -->
+            <!-- Mode Switchers -->
             <div class="flex items-center space-x-3">
-                <button id="viewProjectorBtn" onclick="switchView('projector')" class="px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 hover:bg-indigo-500 transition flex items-center space-x-2">
+                <button id="viewProjectorBtn" onclick="switchView('projector')" class="px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 transition flex items-center space-x-2">
                     <i class="fa-solid fa-desktop"></i>
                     <span>Projector Display</span>
                 </button>
@@ -59,68 +58,97 @@
     </header>
 
     <!-- MAIN CONTAINER -->
-    <main class="max-w-7xl mx-auto px-6 py-8 flex-grow w-full">
+    <main class="max-w-7xl mx-auto px-6 py-6 flex-grow w-full">
+
+        <!-- GAME SELECTOR TABS -->
+        <div class="mb-6 flex flex-wrap gap-3 border-b border-slate-800 pb-4">
+            <button onclick="selectGame('LastHuman')" id="tab-LastHuman" class="game-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition flex items-center space-x-2 bg-indigo-600 text-white shadow-lg shadow-indigo-500/20">
+                <i class="fa-solid fa-paw"></i>
+                <span>1. The Last Human</span>
+            </button>
+            <button onclick="selectGame('ChainWriting')" id="tab-ChainWriting" class="game-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition flex items-center space-x-2 bg-slate-800 text-slate-400 hover:bg-slate-700">
+                <i class="fa-solid fa-link"></i>
+                <span>2. Chain Writing</span>
+            </button>
+            <button onclick="selectGame('AgonyAunt')" id="tab-AgonyAunt" class="game-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition flex items-center space-x-2 bg-slate-800 text-slate-400 hover:bg-slate-700">
+                <i class="fa-solid fa-heart-pulse"></i>
+                <span>3. Agony Aunt (Hotline)</span>
+            </button>
+        </div>
 
         <!-- ================= PROJECTOR VIEW ================= -->
         <div id="projectorView" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            <!-- Left Side: Prompt & Instructions -->
+            <!-- Left Side: Dynamic Game Cards -->
             <div class="lg:col-span-7 space-y-6">
-                <!-- Prompt Card -->
-                <div class="glass-panel p-6 rounded-2xl border border-slate-800 shadow-2xl relative overflow-hidden">
-                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-indigo-600/10 rounded-full blur-3xl"></div>
+                
+                <!-- CARD 1: THE LAST HUMAN -->
+                <div id="prompt-LastHuman" class="game-prompt-card glass-panel p-6 rounded-2xl border border-slate-800 shadow-2xl relative overflow-hidden">
                     <span class="px-3 py-1 bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-semibold rounded-full uppercase tracking-wider">
-                        <i class="fa-solid fa-bolt mr-1"></i> Today's Writing Challenge
+                        <i class="fa-solid fa-bolt mr-1"></i> Writing Challenge #1
                     </span>
-                    <h2 class="text-3xl font-extrabold text-white mt-4 mb-3 leading-snug">
-                        "The Last Human & Talking Animals"
-                    </h2>
+                    <h2 class="text-3xl font-extrabold text-white mt-4 mb-3 leading-snug">"The Last Human & Talking Animals"</h2>
                     <blockquote class="border-l-4 border-indigo-500 pl-4 py-2 my-4 italic text-slate-300 text-lg bg-slate-900/40 rounded-r-lg">
                         "You woke up and realized you are the only human left on Earth, but all animals can suddenly speak English. Write about your first day and your plan."
                     </blockquote>
+                    <div class="mt-4 space-y-2 text-xs text-slate-300">
+                        <div class="p-2.5 bg-slate-900/60 rounded-lg border border-slate-800">1. How did you realize you were the last human?</div>
+                        <div class="p-2.5 bg-slate-900/60 rounded-lg border border-slate-800">2. Who was the first talking animal you met and what did it say?</div>
+                        <div class="p-2.5 bg-slate-900/60 rounded-lg border border-slate-800">3. What is your immediate survival plan?</div>
+                    </div>
+                </div>
 
-                    <!-- Key Prompts / Ideas to Cover -->
-                    <div class="mt-6 space-y-3">
-                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Key Prompts to cover in your story:</h4>
-                        <div class="grid grid-cols-1 gap-2 text-sm text-slate-300">
-                            <div class="flex items-start space-x-3 bg-slate-900/60 p-3 rounded-lg border border-slate-800">
-                                <span class="bg-indigo-500/20 text-indigo-400 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">1</span>
-                                <span>How did you realize you were the last human alive on Earth?</span>
-                            </div>
-                            <div class="flex items-start space-x-3 bg-slate-900/60 p-3 rounded-lg border border-slate-800">
-                                <span class="bg-indigo-500/20 text-indigo-400 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">2</span>
-                                <span>Who was the first talking animal you met, and what did it say to you?</span>
-                            </div>
-                            <div class="flex items-start space-x-3 bg-slate-900/60 p-3 rounded-lg border border-slate-800">
-                                <span class="bg-indigo-500/20 text-indigo-400 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">3</span>
-                                <span>What is your immediate survival plan or action plan for Day 1?</span>
-                            </div>
+                <!-- CARD 2: CHAIN WRITING -->
+                <div id="prompt-ChainWriting" class="game-prompt-card glass-panel p-6 rounded-2xl border border-slate-800 shadow-2xl relative overflow-hidden hidden">
+                    <span class="px-3 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold rounded-full uppercase tracking-wider">
+                        <i class="fa-solid fa-link mr-1"></i> Writing Challenge #2
+                    </span>
+                    <h2 class="text-3xl font-extrabold text-white mt-4 mb-3 leading-snug">"Pass-the-Story (Chain Writing)"</h2>
+                    <p class="text-slate-300 text-sm mb-4">Collaborate with your classmate to build one epic story paragraph by paragraph!</p>
+                    <div class="space-y-3 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/60 rounded-lg border border-slate-800">
+                            <span class="font-bold text-amber-400">Round 1:</span> Write the beginning of a story (Introduce character, setting & sudden problem).
+                        </div>
+                        <div class="p-3 bg-slate-900/60 rounded-lg border border-slate-800">
+                            <span class="font-bold text-indigo-400">Round 2:</span> Read your partner's paragraph on screen & write the continuation!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3: AGONY AUNT -->
+                <div id="prompt-AgonyAunt" class="game-prompt-card glass-panel p-6 rounded-2xl border border-slate-800 shadow-2xl relative overflow-hidden hidden">
+                    <span class="px-3 py-1 bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-semibold rounded-full uppercase tracking-wider">
+                        <i class="fa-solid fa-heart-pulse mr-1"></i> Writing Challenge #3
+                    </span>
+                    <h2 class="text-3xl font-extrabold text-white mt-4 mb-3 leading-snug">"Agony Aunt: Teen Hotline"</h2>
+                    <p class="text-slate-300 text-sm mb-4">Give funny, smart, or wise advice to these tricky teen dilemmas!</p>
+                    <div class="space-y-3 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/60 rounded-lg border border-slate-800">
+                            <span class="font-bold text-pink-400">Problem A:</span> "My best friend is dating my crush, but my crush thinks I wrote them a secret love letter! What should I do?"
+                        </div>
+                        <div class="p-3 bg-slate-900/60 rounded-lg border border-slate-800">
+                            <span class="font-bold text-indigo-400">Problem B:</span> "I accidentally deleted my teacher's presentation 10 mins before class. Should I confess or blame Wi-Fi?"
                         </div>
                     </div>
                 </div>
 
                 <!-- Timer & Large QR Code Panel -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Timer Card -->
                     <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between items-center text-center">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400"><i class="fa-solid fa-stopwatch mr-1"></i> Writing Timer</span>
-                        <div id="timerDisplay" class="text-5xl font-extrabold font-mono text-indigo-400 my-4">20:00</div>
-                        <div class="flex space-x-2 w-full justify-center">
-                            <button onclick="startTimer()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition flex items-center space-x-1"><i class="fa-solid fa-play"></i><span>Start</span></button>
-                            <button onclick="pauseTimer()" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-bold transition flex items-center space-x-1"><i class="fa-solid fa-pause"></i><span>Pause</span></button>
-                            <button onclick="resetTimer()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-lg text-xs font-bold transition flex items-center space-x-1"><i class="fa-solid fa-rotate-right"></i><span>Reset</span></button>
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400"><i class="fa-solid fa-stopwatch mr-1"></i> Timer</span>
+                        <div id="timerDisplay" class="text-5xl font-extrabold font-mono text-indigo-400 my-4">15:00</div>
+                        <div class="flex space-x-2">
+                            <button onclick="startTimer()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold"><i class="fa-solid fa-play"></i> Start</button>
+                            <button onclick="pauseTimer()" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-bold"><i class="fa-solid fa-pause"></i> Pause</button>
+                            <button onclick="resetTimer()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-lg text-xs font-bold"><i class="fa-solid fa-rotate-right"></i> Reset</button>
                         </div>
                     </div>
 
-                    <!-- Large QR Code Card -->
                     <div class="glass-panel p-6 rounded-2xl flex flex-col items-center justify-center text-center space-y-3">
-                        <div class="bg-white p-3 rounded-xl shadow-xl flex items-center justify-center">
+                        <div class="bg-white p-3 rounded-xl shadow-xl">
                             <div id="qrcode"></div>
                         </div>
-                        <div>
-                            <h4 class="font-bold text-white text-sm">Scan with Phone</h4>
-                            <p class="text-xs text-indigo-300 mt-0.5">Point camera to write story</p>
-                        </div>
+                        <p id="qrLabel" class="text-xs text-indigo-300 font-semibold">Scan to join current game</p>
                     </div>
                 </div>
             </div>
@@ -136,13 +164,10 @@
                         <span id="submissionCount" class="text-xs bg-slate-800 px-3 py-1 rounded-full text-indigo-400 font-semibold border border-slate-700">0 submitted</span>
                     </div>
 
-                    <!-- Stories Feed -->
                     <div id="storiesContainer" class="space-y-4 overflow-y-auto max-h-[550px] pr-2 flex-grow">
-                        <!-- Empty State -->
                         <div id="emptyState" class="text-center py-16 text-slate-500 my-auto">
                             <i class="fa-solid fa-paper-plane text-4xl mb-3 text-slate-600"></i>
-                            <p class="font-semibold text-slate-400">No stories submitted yet</p>
-                            <p class="text-xs mt-1">Submissions from students will appear here automatically in real time!</p>
+                            <p class="font-semibold text-slate-400">No entries yet for this game</p>
                         </div>
                     </div>
                 </div>
@@ -157,33 +182,48 @@
                     <span class="px-3 py-1 bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-semibold rounded-full uppercase tracking-wider">
                         Student Form
                     </span>
-                    <h2 class="text-2xl font-bold text-white mt-2">Write Your Story</h2>
-                    <p class="text-sm text-slate-400 mt-1">Scenario: You are the last human on Earth, and animals can speak English!</p>
+                    <h2 class="text-2xl font-bold text-white mt-2">Submit Your Writing</h2>
+                    <p id="studentFormSubtext" class="text-sm text-slate-400 mt-1">Currently playing: The Last Human</p>
                 </div>
 
                 <form id="submissionForm" onsubmit="handleFormSubmit(event)" class="space-y-5">
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Your Name / Nickname</label>
-                        <input type="text" id="studentName" required placeholder="e.g. Alex" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition">
+                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Select Game Topic</label>
+                        <select id="formGameSelect" onchange="onStudentGameChange(this.value)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500">
+                            <option value="LastHuman">1. The Last Human & Talking Animals</option>
+                            <option value="ChainWriting">2. Pass-the-Story (Chain Writing)</option>
+                            <option value="AgonyAunt">3. Agony Aunt (Hotline Advice)</option>
+                        </select>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Your Creative Story</label>
-                        <textarea id="studentStory" required rows="8" placeholder="Start typing your story here... (Describe your first day, the animals you met, and your survival plan!)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition text-sm leading-relaxed"></textarea>
+                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Your Name / Nickname</label>
+                        <input type="text" id="studentName" required placeholder="e.g. Alex" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500">
                     </div>
 
-                    <button type="submit" id="submitBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-indigo-600/30 transition flex items-center justify-center space-x-2">
+                    <!-- Dynamic Extra Field for Chain Writing & Agony Aunt -->
+                    <div id="extraFieldContainer" class="hidden">
+                        <label id="extraFieldLabel" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Option</label>
+                        <select id="studentExtra" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500">
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Your Writing</label>
+                        <textarea id="studentStory" required rows="8" placeholder="Type your story or response here..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 text-sm leading-relaxed"></textarea>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-paper-plane"></i>
-                        <span>Submit Story to Class Screen</span>
+                        <span>Submit to Class Screen</span>
                     </button>
                 </form>
 
-                <!-- Success Alert -->
                 <div id="successAlert" class="mt-4 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-sm hidden flex items-center space-x-3">
                     <i class="fa-solid fa-circle-check text-xl shrink-0"></i>
                     <div>
-                        <p class="font-bold">Story Submitted Successfully!</p>
-                        <p class="text-xs text-emerald-300/80">Look at the class projector screen to see your story.</p>
+                        <p class="font-bold">Submitted Successfully!</p>
+                        <p class="text-xs text-emerald-300/80">Check the projector screen to see your text.</p>
                     </div>
                 </div>
             </div>
@@ -191,16 +231,41 @@
 
     </main>
 
-    <!-- Footer -->
     <footer class="border-t border-slate-800/80 py-4 text-center text-xs text-slate-500">
-        English Creative Writing Workshop &bull; Live Google Sheets Sync
+        English Writing Workshop &bull; Live Multi-Game Sync
     </footer>
 
-    <!-- JS APP LOGIC -->
+    <!-- JS LOGIC -->
     <script>
         let submissions = [];
+        let qrCodeObj = null;
 
-        // 1. View Switcher
+        // Switch Active Game
+        function selectGame(gameKey) {
+            activeGame = gameKey;
+
+            // Update Tab UI
+            document.querySelectorAll('.game-tab-btn').forEach(btn => {
+                btn.className = "game-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition flex items-center space-x-2 bg-slate-800 text-slate-400 hover:bg-slate-700";
+            });
+            const activeTab = document.getElementById(`tab-${gameKey}`);
+            if (activeTab) {
+                activeTab.className = "game-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition flex items-center space-x-2 bg-indigo-600 text-white shadow-lg shadow-indigo-500/20";
+            }
+
+            // Update Prompt Cards
+            document.querySelectorAll('.game-prompt-card').forEach(card => card.classList.add('hidden'));
+            document.getElementById(`prompt-${gameKey}`).classList.remove('hidden');
+
+            // Update Student Form Selector Sync
+            document.getElementById('formGameSelect').value = gameKey;
+            onStudentGameChange(gameKey);
+
+            // Fetch Data for Selected Game
+            fetchSubmissions();
+        }
+
+        // View Switcher
         function switchView(view) {
             const projectorView = document.getElementById('projectorView');
             const studentView = document.getElementById('studentView');
@@ -210,61 +275,78 @@
             if (view === 'projector') {
                 projectorView.classList.remove('hidden');
                 studentView.classList.add('hidden');
-                projectorBtn.className = "px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 hover:bg-indigo-500 transition flex items-center space-x-2";
-                studentBtn.className = "px-4 py-2 text-sm font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition flex items-center space-x-2";
+                projectorBtn.className = "px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 flex items-center space-x-2";
+                studentBtn.className = "px-4 py-2 text-sm font-semibold rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center space-x-2";
                 window.location.hash = "projector";
             } else {
                 projectorView.classList.add('hidden');
                 studentView.classList.remove('hidden');
-                studentBtn.className = "px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 hover:bg-indigo-500 transition flex items-center space-x-2";
-                projectorBtn.className = "px-4 py-2 text-sm font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition flex items-center space-x-2";
+                studentBtn.className = "px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 flex items-center space-x-2";
+                projectorBtn.className = "px-4 py-2 text-sm font-semibold rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center space-x-2";
                 window.location.hash = "student";
             }
         }
 
-        // Check URL Hash on Load
-        if (window.location.hash === '#student') {
-            switchView('student');
-        }
+        if (window.location.hash === '#student') switchView('student');
 
-        // 2. Generate Large QR Code
-        window.addEventListener('DOMContentLoaded', () => {
-            const currentUrl = window.location.href.split('#')[0] + '#student';
-            new QRCode(document.getElementById("qrcode"), {
-                text: currentUrl,
-                width: 170, // Ukuran diperbesar ke 170px
-                height: 170,
-                colorDark : "#0f172a",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            });
+        // Dynamic Student Form Fields
+        function onStudentGameChange(gameKey) {
+            const extraContainer = document.getElementById('extraFieldContainer');
+            const extraLabel = document.getElementById('extraFieldLabel');
+            const extraSelect = document.getElementById('studentExtra');
 
-            // Start Polling Submissions
-            fetchSubmissions();
-            setInterval(fetchSubmissions, 4000); // Polls Google Apps Script every 4 seconds
-        });
-
-        // 3. Fetch Submissions from Apps Script
-        async function fetchSubmissions() {
-            try {
-                const response = await fetch(APPS_SCRIPT_URL);
-                if (response.ok) {
-                    const data = await response.json();
-                    submissions = data;
-                    renderSubmissions();
-                }
-            } catch (err) {
-                console.log("Fetching submissions...", err);
+            if (gameKey === 'ChainWriting') {
+                extraContainer.classList.remove('hidden');
+                extraLabel.textContent = "Which Round Is This?";
+                extraSelect.innerHTML = `
+                    <option value="Round 1 (Beginning)">Round 1: Writing the Beginning</option>
+                    <option value="Round 2 (Continuation)">Round 2: Continuing Partner's Story</option>
+                    <option value="Round 3 (Ending)">Round 3: Writing the Ending</option>
+                `;
+            } else if (gameKey === 'AgonyAunt') {
+                extraContainer.classList.remove('hidden');
+                extraLabel.textContent = "Which Problem Are You Solving?";
+                extraSelect.innerHTML = `
+                    <option value="Problem A (Best friend & Crush)">Problem A: Best Friend & Crush Dilemma</option>
+                    <option value="Problem B (Deleted Presentation)">Problem B: Deleted Presentation File</option>
+                `;
+            } else {
+                extraContainer.classList.add('hidden');
             }
         }
 
-        // 4. Render Submissions to UI
+        // Initialize QR & Polling
+        window.addEventListener('DOMContentLoaded', () => {
+            const currentUrl = window.location.href.split('#')[0] + '#student';
+            qrCodeObj = new QRCode(document.getElementById("qrcode"), {
+                text: currentUrl,
+                width: 160,
+                height: 160,
+                colorDark : "#0f172a",
+                colorLight : "#ffffff"
+            });
+
+            onStudentGameChange('LastHuman');
+            fetchSubmissions();
+            setInterval(fetchSubmissions, 4000);
+        });
+
+        // Fetch Data from Google Apps Script
+        async function fetchSubmissions() {
+            try {
+                const response = await fetch(`${APPS_SCRIPT_URL}?sheet=${activeGame}`);
+                if (response.ok) {
+                    submissions = await response.json();
+                    renderSubmissions();
+                }
+            } catch (err) {}
+        }
+
+        // Render Submissions
         function renderSubmissions() {
             const container = document.getElementById('storiesContainer');
             const emptyState = document.getElementById('emptyState');
-            const countLabel = document.getElementById('submissionCount');
-
-            countLabel.textContent = `${submissions.length} submitted`;
+            document.getElementById('submissionCount').textContent = `${submissions.length} submitted`;
 
             if (submissions.length === 0) {
                 emptyState.classList.remove('hidden');
@@ -274,14 +356,18 @@
             }
 
             container.innerHTML = '';
-
             submissions.slice().reverse().forEach((sub) => {
                 const card = document.createElement('div');
-                card.className = "story-card bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3 relative overflow-hidden";
+                card.className = "story-card bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 relative overflow-hidden";
+                
+                let badgeHtml = '';
+                if (sub.round) badgeHtml = `<span class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-semibold">${escapeHtml(sub.round)}</span>`;
+                if (sub.problem) badgeHtml = `<span class="text-[10px] bg-pink-500/20 text-pink-300 px-2 py-0.5 rounded font-semibold">${escapeHtml(sub.problem)}</span>`;
+
                 card.innerHTML = `
-                    <div class="flex justify-between items-center border-b border-slate-800/80 pb-2">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
                         <span class="font-bold text-indigo-400 text-sm flex items-center"><i class="fa-solid fa-user-pen mr-2 text-xs"></i>${escapeHtml(sub.name)}</span>
-                        <span class="text-[10px] text-slate-500 font-mono">${new Date(sub.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                        ${badgeHtml}
                     </div>
                     <p class="text-sm text-slate-300 leading-relaxed whitespace-pre-line">${escapeHtml(sub.story)}</p>
                 `;
@@ -289,21 +375,24 @@
             });
         }
 
-        // 5. Handle Student Form Submit
+        // Form Submit Handler
         async function handleFormSubmit(e) {
             e.preventDefault();
             const submitBtn = document.getElementById('submitBtn');
-            const nameInput = document.getElementById('studentName');
-            const storyInput = document.getElementById('studentStory');
-            const alert = document.getElementById('successAlert');
+            const selectedGame = document.getElementById('formGameSelect').value;
+            const extraVal = document.getElementById('studentExtra').value;
 
             const payload = {
-                name: nameInput.value.trim(),
-                story: storyInput.value.trim()
+                sheetName: selectedGame,
+                name: document.getElementById('studentName').value.trim(),
+                story: document.getElementById('studentStory').value.trim()
             };
 
+            if (selectedGame === 'ChainWriting') payload.round = extraVal;
+            if (selectedGame === 'AgonyAunt') payload.problem = extraVal;
+
             submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Sending to Screen...</span>`;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Sending...</span>`;
 
             try {
                 await fetch(APPS_SCRIPT_URL, {
@@ -313,66 +402,34 @@
                     body: JSON.stringify(payload)
                 });
 
-                // Success UI feedback
-                alert.classList.remove('hidden');
-                storyInput.value = '';
-                
-                setTimeout(() => {
-                    alert.classList.add('hidden');
-                }, 5000);
-
-                // Fetch new data immediately
+                document.getElementById('successAlert').classList.remove('hidden');
+                document.getElementById('studentStory').value = '';
+                setTimeout(() => document.getElementById('successAlert').classList.add('hidden'), 4000);
                 setTimeout(fetchSubmissions, 1000);
 
             } catch (err) {
-                alert("Failed to submit. Please check connection.");
+                alert("Failed to submit.");
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>Submit Story to Class Screen</span>`;
+                submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>Submit to Class Screen</span>`;
             }
         }
 
-        // Utility: Sanitize HTML
         function escapeHtml(text) {
-            return text
-                ? text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;")
-                : '';
+            return text ? text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : '';
         }
 
-        // 6. Timer Logic
-        let timerSeconds = 1200; // 20 mins
+        // Timer Logic
+        let timerSeconds = 900;
         let timerInterval = null;
-
         function updateTimerDisplay() {
             const mins = Math.floor(timerSeconds / 60);
             const secs = timerSeconds % 60;
-            document.getElementById('timerDisplay').textContent = 
-                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            document.getElementById('timerDisplay').textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
-
-        function startTimer() {
-            if (timerInterval) return;
-            timerInterval = setInterval(() => {
-                if (timerSeconds > 0) {
-                    timerSeconds--;
-                    updateTimerDisplay();
-                } else {
-                    pauseTimer();
-                    alert("Time's up!");
-                }
-            }, 1000);
-        }
-
-        function pauseTimer() {
-            clearInterval(timerInterval);
-            timerInterval = null;
-        }
-
-        function resetTimer() {
-            pauseTimer();
-            timerSeconds = 1200;
-            updateTimerDisplay();
-        }
+        function startTimer() { if (!timerInterval) timerInterval = setInterval(() => { if (timerSeconds > 0) { timerSeconds--; updateTimerDisplay(); } else pauseTimer(); }, 1000); }
+        function pauseTimer() { clearInterval(timerInterval); timerInterval = null; }
+        function resetTimer() { pauseTimer(); timerSeconds = 900; updateTimerDisplay(); }
     </script>
 </body>
 </html>
