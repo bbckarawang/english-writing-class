@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Last Human & Talking Animals - Interactive Writing Prompt</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        .font-heading {
+            font-family: 'Outfit', sans-serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between">
+
+    <!-- Header Navigation -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-40 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-indigo-600/20 text-indigo-400 rounded-xl border border-indigo-500/30">
+                    <i class="fa-solid fa-pen-nib text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-heading font-bold text-xl text-white tracking-wide">English Creative Writing Workshop</h1>
+                    <p class="text-xs text-slate-400">Interactive Student Writing Hub</p>
+                </div>
+            </div>
+
+            <!-- View Switcher Tabs -->
+            <div class="flex bg-slate-800 p-1 rounded-xl border border-slate-700/60">
+                <button id="navProjectorBtn" onclick="switchView('projector')" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-indigo-600 text-white shadow-lg">
+                    <i class="fa-solid fa-tv"></i>
+                    <span>Projector Display</span>
+                </button>
+                <button id="navStudentBtn" onclick="switchView('student')" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                    <span>Student Writing Form</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6">
+        
+        <!-- ================= PROJECTOR VIEW ================= -->
+        <div id="projectorView" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Left Column: Prompt & Timer (8 cols) -->
+            <div class="lg:col-span-7 xl:col-span-8 flex flex-col gap-6">
+                
+                <!-- Main Prompt Card -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+                    <div class="absolute -right-12 -top-12 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-4">
+                        <i class="fa-solid fa-bolt text-indigo-400"></i> Today's Writing Challenge
+                    </div>
+                    
+                    <h2 class="font-heading font-extrabold text-3xl md:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-white to-purple-300 mb-4">
+                        "The Last Human & Talking Animals"
+                    </h2>
+                    
+                    <div class="bg-slate-800/80 border-l-4 border-indigo-500 p-4 rounded-r-xl mb-6">
+                        <p class="text-lg text-slate-200 italic leading-relaxed">
+                            "You woke up and realized you are the only human left on Earth, but all animals can suddenly speak English. Write about your first day and your plan."
+                        </p>
+                    </div>
+
+                    <!-- Guided Points -->
+                    <div class="space-y-3">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Key Prompts to Cover in Your Story:</h3>
+                        
+                        <div class="flex items-start gap-3 bg-slate-950/50 p-3 rounded-lg border border-slate-800">
+                            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 font-bold text-xs flex items-center justify-center border border-indigo-500/30">1</span>
+                            <p class="text-sm text-slate-300">How did you realize you were the last human alive on Earth?</p>
+                        </div>
+                        
+                        <div class="flex items-start gap-3 bg-slate-950/50 p-3 rounded-lg border border-slate-800">
+                            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 font-bold text-xs flex items-center justify-center border border-indigo-500/30">2</span>
+                            <p class="text-sm text-slate-300">Who was the first talking animal you met, and what did it say to you?</p>
+                        </div>
+                        
+                        <div class="flex items-start gap-3 bg-slate-950/50 p-3 rounded-lg border border-slate-800">
+                            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 font-bold text-xs flex items-center justify-center border border-indigo-500/30">3</span>
+                            <p class="text-sm text-slate-300">What is your immediate survival plan or action plan for Day 1?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timer & QR Code Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Countdown Timer Card -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between items-center text-center shadow-xl">
+                        <div class="w-full flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                <i class="fa-regular fa-clock text-indigo-400 mr-1"></i> Writing Timer
+                            </span>
+                            <span id="timerStatus" class="text-xs px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">Ready</span>
+                        </div>
+                        
+                        <div id="timerDisplay" class="font-heading font-black text-5xl tracking-widest my-3 text-white">
+                            20:00
+                        </div>
+
+                        <!-- Timer Controls -->
+                        <div class="flex items-center gap-2 w-full justify-center">
+                            <button onclick="startTimer()" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-1.5 shadow-md">
+                                <i class="fa-solid fa-play text-xs"></i> Start
+                            </button>
+                            <button onclick="pauseTimer()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3 py-2 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-pause text-xs"></i> Pause
+                            </button>
+                            <button onclick="resetTimer()" class="bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white border border-slate-700 p-2 rounded-xl text-sm transition">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- QR Code Scan Card -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col items-center text-center shadow-xl">
+                        <div class="w-full flex justify-between items-center mb-3">
+                            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                <i class="fa-solid fa-qrcode text-indigo-400 mr-1"></i> Scan to Write
+                            </span>
+                            <span class="text-xs text-indigo-400 hover:underline cursor-pointer" onclick="switchView('student')">Direct Link <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+                        </div>
+                        
+                        <!-- QR Code Container -->
+                        <div class="bg-white p-2 rounded-xl shadow-lg mb-2">
+                            <img id="qrCodeImg" src="" alt="Scan QR Code to submit story" class="w-28 h-28 object-contain" />
+                        </div>
+                        <p class="text-xs text-slate-400">Scan with your smartphone to open the answer sheet</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Right Column: Live Submissions Feed (4 cols) -->
+            <div class="lg:col-span-5 xl:col-span-4">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-2xl h-full flex flex-col min-h-[500px]">
+                    
+                    <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                            <h3 class="font-heading font-bold text-lg text-white">Live Submissions</h3>
+                        </div>
+                        <span id="submissionCount" class="text-xs px-2.5 py-1 bg-indigo-500/20 text-indigo-300 font-semibold rounded-full border border-indigo-500/30">0 submitted</span>
+                    </div>
+
+                    <!-- Cards Container -->
+                    <div id="submissionsFeed" class="flex-grow space-y-4 overflow-y-auto max-h-[620px] pr-1">
+                        <!-- Empty State -->
+                        <div id="emptyState" class="h-64 flex flex-col items-center justify-center text-center p-6 text-slate-500 border-2 border-dashed border-slate-800 rounded-xl">
+                            <i class="fa-solid fa-paper-plane text-3xl mb-3 text-slate-700"></i>
+                            <p class="text-sm font-medium text-slate-400">No stories submitted yet</p>
+                            <p class="text-xs text-slate-600 mt-1">Submissions from students will appear here automatically in real time!</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= STUDENT FORM VIEW ================= -->
+        <div id="studentView" class="hidden max-w-2xl mx-auto">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl">
+                
+                <div class="mb-6 border-b border-slate-800 pb-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-2">
+                        <i class="fa-solid fa-feather"></i> Writing Response Form
+                    </div>
+                    <h2 class="font-heading font-bold text-2xl text-white">The Last Human & Talking Animals</h2>
+                    <p class="text-xs text-slate-400 mt-1">Enter your nickname and write your creative response below.</p>
+                </div>
+
+                <form id="storyForm" onsubmit="handleFormSubmit(event)" class="space-y-5">
+                    
+                    <!-- Nickname Field -->
+                    <div>
+                        <label for="studentName" class="block text-sm font-medium text-slate-300 mb-1.5">
+                            Your Name / Nickname <span class="text-rose-400">*</span>
+                        </label>
+                        <input type="text" id="studentName" required placeholder="e.g. Alex or Maya"
+                            class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                    </div>
+
+                    <!-- Story Textarea -->
+                    <div>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label for="storyText" class="block text-sm font-medium text-slate-300">
+                                Your Story <span class="text-rose-400">*</span>
+                            </label>
+                            <span id="wordCount" class="text-xs text-slate-500">0 words</span>
+                        </div>
+                        <textarea id="storyText" required rows="10" 
+                            placeholder="I opened my eyes and looked out the window. The streets were empty..."
+                            oninput="updateWordCount()"
+                            class="w-full bg-slate-950 border border-slate-700 rounded-xl p-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition leading-relaxed"></textarea>
+                    </div>
+
+                    <!-- Prompt Reminders in Form -->
+                    <div class="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-1">
+                        <p class="font-semibold text-slate-300 mb-1">Remember to include:</p>
+                        <p>• How you realized you were the last human.</p>
+                        <p>• The first animal you met & what it said.</p>
+                        <p>• Your plan for Day 1.</p>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submitBtn" 
+                        class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Submit Story to Projector</span>
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal for Reading Full Story -->
+    <div id="storyModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-6 shadow-2xl flex flex-col max-h-[90vh]">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-indigo-600/30 text-indigo-400 flex items-center justify-center font-bold text-sm">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <h3 id="modalAuthor" class="font-heading font-bold text-lg text-white">Student Name</h3>
+                        <p id="modalTime" class="text-xs text-slate-400">Submitted just now</p>
+                    </div>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div id="modalContent" class="overflow-y-auto text-slate-200 leading-relaxed space-y-4 pr-2 text-sm md:text-base whitespace-pre-wrap">
+                <!-- Full story content -->
+            </div>
+            <div class="mt-6 pt-3 border-t border-slate-800 flex justify-end">
+                <button onclick="closeModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl text-sm font-semibold">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-t border-slate-900 bg-slate-950/50 py-3 text-center text-xs text-slate-600">
+        Classroom Writing Tool &bull; Live Synchronization Enabled
+    </footer>
+
+    <!-- Firebase Realtime App Imports -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase Setup & Environment Fallback
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'writing-prompt-app';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' 
+            ? JSON.parse(__firebase_config) 
+            : { apiKey: "demo", authDomain: "demo.firebaseapp.com", projectId: "demo", storageBucket: "demo", messagingSenderId: "123", appId: "123" };
+
+        let db = null;
+        let auth = null;
+        let isFirebaseAvailable = false;
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+
+            // Authentication Handler
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+            isFirebaseAvailable = true;
+            listenToSubmissions();
+        } catch (err) {
+            console.warn("Firestore initialization failed, using local storage fallback mode.", err);
+            setupLocalStorageSync();
+        }
+
+        // Firestore real-time listener
+        function listenToSubmissions() {
+            if (!db) return;
+            const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'stories');
+            
+            onSnapshot(colRef, (snapshot) => {
+                const stories = [];
+                snapshot.forEach(doc => {
+                    stories.push({ id: doc.id, ...doc.data() });
+                });
+                // Sort by timestamp desc in JS
+                stories.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                renderSubmissions(stories);
+            }, (error) => {
+                console.error("Firestore listener error:", error);
+                setupLocalStorageSync();
+            });
+        }
+
+        // Global function for form submission
+        window.saveStoryToDB = async function(author, storyText) {
+            const storyData = {
+                author: author,
+                text: storyText,
+                timestamp: Date.now()
+            };
+
+            if (isFirebaseAvailable && db) {
+                try {
+                    const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'stories');
+                    await addDoc(colRef, storyData);
+                    return true;
+                } catch (e) {
+                    console.error("Error adding doc to Firestore:", e);
+                }
+            }
+            
+            // Fallback Local Storage
+            saveToLocalStorage(storyData);
+            return true;
+        };
+
+        // Local storage listener fallback across tabs
+        function setupLocalStorageSync() {
+            loadLocalStorageStories();
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'classroom_writing_stories') {
+                    loadLocalStorageStories();
+                }
+            });
+        }
+
+        function saveToLocalStorage(data) {
+            const existing = JSON.parse(localStorage.getItem('classroom_writing_stories') || '[]');
+            existing.unshift(data);
+            localStorage.setItem('classroom_writing_stories', JSON.stringify(existing));
+            renderSubmissions(existing);
+        }
+
+        function loadLocalStorageStories() {
+            const existing = JSON.parse(localStorage.getItem('classroom_writing_stories') || '[]');
+            renderSubmissions(existing);
+        }
+    </script>
+
+    <script>
+        // --- View Controller ---
+        function switchView(view) {
+            const projView = document.getElementById('projectorView');
+            const studView = document.getElementById('studentView');
+            const projBtn = document.getElementById('navProjectorBtn');
+            const studBtn = document.getElementById('navStudentBtn');
+
+            if (view === 'projector') {
+                projView.classList.remove('hidden');
+                studView.classList.add('hidden');
+                projBtn.className = "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-indigo-600 text-white shadow-lg";
+                studBtn.className = "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-400 hover:text-white";
+            } else {
+                projView.classList.add('hidden');
+                studView.classList.remove('hidden');
+                studBtn.className = "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-indigo-600 text-white shadow-lg";
+                projBtn.className = "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-400 hover:text-white";
+            }
+        }
+
+        // --- Generate QR Code ---
+        function initQRCode() {
+            const currentUrl = window.location.href.split('#')[0] + '#student';
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(currentUrl)}`;
+            document.getElementById('qrCodeImg').src = qrApiUrl;
+        }
+
+        // --- Countdown Timer Logic ---
+        let timerSeconds = 20 * 60;
+        let timerInterval = null;
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            document.getElementById('timerDisplay').innerText = 
+                `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (timerInterval) return;
+            document.getElementById('timerStatus').innerText = "Running";
+            document.getElementById('timerStatus').className = "text-xs px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+            
+            timerInterval = setInterval(() => {
+                if (timerSeconds > 0) {
+                    timerSeconds--;
+                    updateTimerDisplay();
+                } else {
+                    pauseTimer();
+                    document.getElementById('timerStatus').innerText = "Time's Up!";
+                    document.getElementById('timerStatus').className = "text-xs px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20 animate-bounce";
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            document.getElementById('timerStatus').innerText = "Paused";
+            document.getElementById('timerStatus').className = "text-xs px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20";
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timerSeconds = 20 * 60;
+            updateTimerDisplay();
+            document.getElementById('timerStatus').innerText = "Ready";
+            document.getElementById('timerStatus').className = "text-xs px-2 py-0.5 rounded bg-slate-700 text-slate-300";
+        }
+
+        // --- Word Counter ---
+        function updateWordCount() {
+            const text = document.getElementById('storyText').value.trim();
+            const words = text ? text.split(/\s+/).length : 0;
+            document.getElementById('wordCount').innerText = `${words} words`;
+        }
+
+        // --- Form Submission Handler ---
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            const authorInput = document.getElementById('studentName');
+            const storyInput = document.getElementById('storyText');
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (!authorInput.value.trim() || !storyInput.value.trim()) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Submitting...`;
+
+            try {
+                if (window.saveStoryToDB) {
+                    await window.saveStoryToDB(authorInput.value.trim(), storyInput.value.trim());
+                }
+                
+                // Success Feedback
+                storyInput.value = '';
+                updateWordCount();
+                alert('🎉 Story submitted successfully! Check the projector display.');
+                
+                // Switch to Projector View
+                switchView('projector');
+            } catch (err) {
+                console.error(err);
+                alert('Submission failed. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>Submit Story to Projector</span>`;
+            }
+        }
+
+        // --- Render Submissions Cards ---
+        let currentStories = [];
+
+        function renderSubmissions(stories) {
+            currentStories = stories;
+            const container = document.getElementById('submissionsFeed');
+            const countLabel = document.getElementById('submissionCount');
+            
+            countLabel.innerText = `${stories.length} submitted`;
+
+            if (!stories || stories.length === 0) {
+                container.innerHTML = `
+                    <div id="emptyState" class="h-64 flex flex-col items-center justify-center text-center p-6 text-slate-500 border-2 border-dashed border-slate-800 rounded-xl">
+                        <i class="fa-solid fa-paper-plane text-3xl mb-3 text-slate-700"></i>
+                        <p class="text-sm font-medium text-slate-400">No stories submitted yet</p>
+                        <p class="text-xs text-slate-600 mt-1">Submissions from students will appear here automatically in real time!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = stories.map((s, idx) => {
+                const previewText = s.text.length > 140 ? s.text.substring(0, 140) + '...' : s.text;
+                const timeAgo = s.timestamp ? new Date(s.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Just now';
+
+                return `
+                    <div class="bg-slate-950/80 border border-slate-800 hover:border-indigo-500/50 p-4 rounded-xl transition duration-200 group">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-7 h-7 rounded-full bg-indigo-600/30 text-indigo-400 font-bold text-xs flex items-center justify-center border border-indigo-500/20">
+                                    ${escapeHtml(s.author.charAt(0).toUpperCase())}
+                                </div>
+                                <span class="font-heading font-semibold text-white text-sm">${escapeHtml(s.author)}</span>
+                            </div>
+                            <span class="text-[10px] text-slate-500">${timeAgo}</span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-3 font-normal whitespace-pre-wrap">${escapeHtml(previewText)}</p>
+                        <button onclick="openModal(${idx})" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold inline-flex items-center gap-1">
+                            Read Full Story <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-0.5 transition-transform"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- Modal Control ---
+        function openModal(index) {
+            const story = currentStories[index];
+            if (!story) return;
+
+            document.getElementById('modalAuthor').innerText = story.author;
+            document.getElementById('modalTime').innerText = story.timestamp ? `Submitted at ${new Date(story.timestamp).toLocaleTimeString()}` : '';
+            document.getElementById('modalContent').innerText = story.text;
+            document.getElementById('storyModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('storyModal').classList.add('hidden');
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+            });
+        }
+
+        // --- Page Init ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initQRCode();
+            updateTimerDisplay();
+
+            // Auto switch to student mode if URL fragment has #student
+            if (window.location.hash === '#student') {
+                switchView('student');
+            }
+        });
+    </script>
+</body>
+</html>
